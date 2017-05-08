@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Exploring Costa Rica Caribbean Lobster Status.
+## Exploring Costa Rica Caribbean Lobster Status.Initial code from jcvd
 
 ```{r 1, include=TRUE, echo=FALSE}
 suppressPackageStartupMessages({
