@@ -5,15 +5,16 @@ date: "5/7/2017"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Exploring Costa Rica Caribbean Lobster Status.
 
-```{r 1, include=False, echo=FALSE}
-install.packages("tidyverse")
-library(tidyverse)
+```{r 1, include=TRUE, echo=FALSE}
+suppressPackageStartupMessages({
+  library(tidyverse)
+})
 
 cr_lobster <- read.csv("CostaRicaLandings_1990_2014.csv", stringsAsFactors = T, strip.white = T, sep = ",") %>% 
   rename(Concepto = CONCEPTO) %>% 
@@ -30,6 +31,7 @@ group_by(cr_lobster, Region, Ano, Concepto) %>%
   geom_smooth(method = "loess", alpha = 0.5) +
   geom_point(aes(shape = Region), size = 2) +
   theme_bw()
-
 ```
 
+
+## Exploring Costa Rica Pacific Lobster Status.
