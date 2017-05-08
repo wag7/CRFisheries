@@ -12,18 +12,19 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Exploring Costa Rica Caribbean Lobster Status.
 
 ```{r 1, include=False, echo=FALSE}
-CostaRicaLandings_1990_2014 <- read.csv("~/Desktop/UCSB/Courses/Spring 2017/Informatics/Fisheries/CostaRicaLandings_1990_2014.csv")
-View(CostaRicaLandings_1990_2014)
-
 install.packages("tidyverse")
 library(tidyverse)
 
-read.csv("CostaRicaLandings_1990_2014.csv", stringsAsFactors = T, strip.white = T, sep = ",") %>% 
+cr_lobster <- read.csv("CostaRicaLandings_1990_2014.csv", stringsAsFactors = T, strip.white = T, sep = ",") %>% 
   rename(Concepto = CONCEPTO) %>% 
-  gather(Month, Catch, -c(Region, Ano, Concepto)) %>%
+  gather(Month, Catch, -c(Region, Ano, Concepto))
+
+cr_lobster
+View(cr_lobster)
+
+group_by(cr_lobster, Region, Ano, Concepto) %>% 
   filter(Region %in% c("Caribe", "Limon")) %>% 
   filter(Concepto %in% c("LANG CARIBE", "LANGOSTA CARIBE")) %>% 
-  group_by(cr_lobster, Region, Ano, Concepto) %>% 
   summarize(Catch = sum(Catch, na.rm =T)/1000) %>% 
   ggplot(aes(x = Ano, y = Catch)) +
   geom_smooth(method = "loess", alpha = 0.5) +
